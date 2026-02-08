@@ -2,581 +2,190 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>黑潮發電量監測｜Kuroshio Power Monitor</title>
-  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>我的 GitHub Pages 網站</title>
   <style>
     :root{
-      --bg:#0b1220;
-      --panel:#121a2c;
-      --panel2:#0f1730;
-      --border:#22304d;
-      --text:#e8eefc;
-      --muted:rgba(232,238,252,.72);
-      --muted2:rgba(232,238,252,.55);
-      --accent:#7aa2ff;
-      --accent2:#34d399;
-      --danger:#fb7185;
-      --shadow: 0 10px 30px rgba(0,0,0,.25);
-      --radius:16px;
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --brand:#111827;
+      --line:#e5e7eb;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 14px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,"Noto Sans TC","PingFang TC",sans-serif;
-      background:radial-gradient(1200px 800px at 10% 10%, rgba(122,162,255,.12), transparent 50%),
-                 radial-gradient(900px 700px at 90% 20%, rgba(52,211,153,.10), transparent 55%),
-                 var(--bg);
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,"Noto Sans TC","PingFang TC","Heiti TC",sans-serif;
+      background:var(--bg);
       color:var(--text);
+      line-height:1.6;
     }
-    a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
-
-    .wrap{max-width:1180px; margin:0 auto; padding:18px;}
-
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:14px; padding:14px 16px; border:1px solid var(--border);
-      border-radius:var(--radius); background:rgba(18,26,44,.75);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
+    header{
+      background:linear-gradient(180deg,#111827,#1f2937);
+      color:#fff;
+      padding:44px 18px 26px;
+      text-align:center;
     }
-    .brand{display:flex; gap:12px; align-items:center;}
-    .logo{
-      width:40px; height:40px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(122,162,255,.9), rgba(52,211,153,.8));
-      display:grid; place-items:center; color:#07101f; font-weight:800;
+    header h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:.5px;
     }
-    .brand h1{font-size:16px; margin:0; line-height:1.15}
-    .brand .sub{font-size:12px; color:var(--muted2)}
-
-    .nav{display:flex; gap:8px; flex-wrap:wrap}
-    .chip{
-      border:1px solid var(--border);
-      background:rgba(15,23,48,.65);
-      color:var(--text);
-      padding:9px 12px;
+    header p{
+      margin:10px 0 0;
+      color:rgba(255,255,255,.85);
+      font-size:14px;
+    }
+    nav{
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:#111827;
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    nav .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:10px 14px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    nav a{
+      color:rgba(255,255,255,.9);
+      text-decoration:none;
+      padding:8px 12px;
       border-radius:999px;
-      font-size:13px;
-      cursor:pointer;
+      font-size:14px;
     }
-    .chip.active{border-color: rgba(122,162,255,.8); box-shadow: 0 0 0 2px rgba(122,162,255,.15) inset;}
-
-    .grid{display:grid; gap:12px; margin-top:14px;}
-    @media(min-width: 900px){
-      .grid{grid-template-columns: 1.15fr .85fr;}
-    }
-
-    .panel{
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      background:rgba(18,26,44,.72);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .panel-h{
-      padding:14px 16px;
-      display:flex; align-items:center; justify-content:space-between;
-      border-bottom:1px solid var(--border);
-      background:rgba(15,23,48,.7);
-    }
-    .panel-h .title{font-size:14px; margin:0}
-    .panel-h .hint{font-size:12px; color:var(--muted2)}
-
-    .cards{display:grid; gap:12px; padding:14px 16px;}
-    @media(min-width: 520px){
-      .cards{grid-template-columns: repeat(3, 1fr)}
+    nav a:hover{background:rgba(255,255,255,.10)}
+    main{
+      max-width:980px;
+      margin:22px auto 60px;
+      padding:0 14px;
+      display:grid;
+      gap:14px;
     }
     .card{
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:12px 12px;
-      background:rgba(11,18,32,.55);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px 18px;
     }
-    .card .k{font-size:12px; color:var(--muted2); margin-bottom:8px}
-    .card .v{font-size:26px; font-weight:800; letter-spacing:.2px}
-    .card .s{font-size:12px; color:var(--muted); margin-top:6px}
-
-    .controls{padding:14px 16px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
-    button, select, input[type="range"]{
-      border:1px solid var(--border);
-      background:rgba(15,23,48,.75);
-      color:var(--text);
-      border-radius:12px;
+    .card h2{
+      margin:0 0 8px;
+      font-size:18px;
+      color:var(--brand);
+    }
+    .muted{color:var(--muted)}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+    @media (max-width:720px){
+      header h1{font-size:22px}
+      .grid{grid-template-columns:1fr}
+    }
+    ul{margin:10px 0 0; padding-left:18px}
+    a{color:#2563eb}
+    .btnrow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .btn{
+      display:inline-block;
       padding:10px 12px;
-      font-size:13px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fff;
+      text-decoration:none;
+      color:var(--text);
+      font-size:14px;
     }
-    button{cursor:pointer}
-    button.primary{border-color: rgba(122,162,255,.7)}
-    button.good{border-color: rgba(52,211,153,.7)}
-    button.danger{border-color: rgba(251,113,133,.7)}
-    button.active{box-shadow: 0 0 0 2px rgba(122,162,255,.15) inset;}
-
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .label{font-size:12px; color:var(--muted2)}
-    .mini{font-size:12px; color:var(--muted2)}
-
-    #chart{height:520px;}
-    .pad{padding:14px 16px;}
-
-    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background:rgba(122,162,255,.10);
-      border:1px solid rgba(122,162,255,.25); padding:2px 6px; border-radius:8px;}
-
-    .toast{position:fixed; left:50%; transform:translateX(-50%); bottom:16px;
-      background:rgba(18,26,44,.92); border:1px solid var(--border);
-      padding:10px 12px; border-radius:12px; color:var(--text);
-      box-shadow: var(--shadow); font-size:13px; display:none; max-width:92vw;
+    .btn:hover{background:#f3f4f6}
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      padding:22px 14px;
+    }
+    .pill{
+      display:inline-block;
+      padding:4px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      background:#fff;
+      margin-top:6px;
     }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo">K</div>
-        <div>
-          <h1>黑潮發電量監測（50 m）</h1>
-          <div class="sub">展示版：P ∝ v³（相對值）｜資料：HYCOM OPENDAP 計算後 CSV</div>
-        </div>
-      </div>
-      <div class="nav" role="tablist">
-        <button class="chip active" data-tab="dash">儀表板</button>
-        <button class="chip" data-tab="method">方法</button>
-        <button class="chip" data-tab="download">下載</button>
-        <button class="chip" data-tab="about">關於</button>
-      </div>
+  <header>
+    <h1>歡迎來到我的 GitHub Pages 網站</h1>
+    <p>這個頁面用來介紹我、展示專案，以及提供聯絡方式。</p>
+  </header>
+
+  <nav>
+    <div class="wrap">
+      <a href="#home">首頁</a>
+      <a href="#about">關於我</a>
+      <a href="#projects">我的專案</a>
+      <a href="#contact">聯絡方式</a>
     </div>
+  </nav>
 
-    <div class="grid">
-      <!-- Left: Dashboard -->
-      <div class="panel" id="tab-dash">
-        <div class="panel-h">
-          <div>
-            <div class="title">即時/歷史監測</div>
-            <div class="hint">可切換指標、範圍、播放動畫（電視牆很適合）</div>
-          </div>
-          <div class="mini">資料檔：<span class="kbd" id="csvName">—</span></div>
+  <main>
+    <section id="home" class="card">
+      <h2>網站內容區</h2>
+      <p class="muted">
+        你可以在這裡放專案簡介、成果截圖、或是展覽用的簡短說明。
+      </p>
+      <div class="pill">提示：GitHub Pages 會讀取根目錄的 index.html</div>
+    </section>
+
+    <section class="grid">
+      <section id="about" class="card">
+        <h2>關於我</h2>
+        <p>我是一名大一學生，正在做黑潮資料與發電量監測相關專案。</p>
+        <p class="muted">之後可以把這段改成：你的系所、興趣、在做的研究題目。</p>
+      </section>
+
+      <section id="projects" class="card">
+        <h2>我的專案</h2>
+        <p class="muted">先放兩個連結，之後你把網址換成真正的頁面或作品。</p>
+        <ul>
+          <li><a href="#">專案 A</a></li>
+          <li><a href="#">專案 B</a></li>
+        </ul>
+        <div class="btnrow">
+          <a class="btn" href="#contact">聯絡我</a>
+          <a class="btn" href="#home">回到上方</a>
         </div>
+      </section>
+    </section>
 
-        <div class="cards">
-          <div class="card">
-            <div class="k">最新時間</div>
-            <div class="v" id="latestTime">—</div>
-            <div class="s" id="latestTimeSub">—</div>
-          </div>
-          <div class="card">
-            <div class="k">最新流速（m/s）</div>
-            <div class="v" id="latestSpeed">—</div>
-            <div class="s">區域平均｜深度 ≈ 50 m</div>
-          </div>
-          <div class="card">
-            <div class="k">最新相對發電量（norm）</div>
-            <div class="v" id="latestPower">—</div>
-            <div class="s">展示用：把變化放大給路人看</div>
-          </div>
-        </div>
+    <section id="contact" class="card">
+      <h2>聯絡方式</h2>
+      <p>
+        您可以透過電子郵件與我聯繫：
+        <a href="mailto:baby56789767644@gmail.com">baby56789767644@gmail.com</a>
+      </p>
+      <p class="muted">（之後如果要更正式，可以加上 GitHub、學校信箱、或社群連結。）</p>
+    </section>
+  </main>
 
-        <div class="controls">
-          <div class="row">
-            <span class="label">區間</span>
-            <button id="btn7">近 7 天</button>
-            <button id="btn30">近 30 天</button>
-            <button id="btnAll" class="active">全年</button>
-          </div>
-
-          <div class="row">
-            <span class="label">指標</span>
-            <select id="metric">
-              <option value="mean_speed_mps">流速 mean_speed_mps（m/s）</option>
-              <option value="power_norm">相對發電量 power_norm（0–1）</option>
-              <option value="power_relative">相對發電量 power_relative（v³）</option>
-            </select>
-          </div>
-
-          <div class="row">
-            <button id="btnPlay" class="good">▶ 播放</button>
-            <button id="btnPause" class="danger">⏸ 暫停</button>
-            <span class="label">速度</span>
-            <select id="speedSel">
-              <option value="1200">慢</option>
-              <option value="500" selected>中</option>
-              <option value="200">快</option>
-            </select>
-          </div>
-
-          <div class="row" style="flex:1; min-width:260px;">
-            <span class="label">時間游標</span>
-            <input id="slider" type="range" min="0" max="100" value="100" style="width:260px;" />
-            <span class="mini" id="sliderLabel">—</span>
-          </div>
-
-          <div class="row">
-            <button id="btnRefresh" class="primary">⟳ 重新讀取 CSV</button>
-            <button id="btnExport">⇩ 匯出目前區間 CSV</button>
-          </div>
-        </div>
-
-        <div id="chart"></div>
-      </div>
-
-      <!-- Right: Other tabs -->
-      <div class="panel" id="tab-side">
-        <div class="panel-h">
-          <div class="title" id="sideTitle">方法</div>
-          <div class="hint" id="sideHint">你可以把這段放到書審/展覽解說</div>
-        </div>
-
-        <div class="pad" id="sideContent">
-          <h3 style="margin-top:0">方法（展示版）</h3>
-          <ol style="color:var(--muted); line-height:1.7; padding-left:18px;">
-            <li>資料來源：HYCOM（全球海洋數值模式），以 OPENDAP 讀取流速。</li>
-            <li>選定區域：120–130°E、20–30°N（可改成更小範圍做分析）。</li>
-            <li>深度：50 m（避免表層風場干擾，更貼近設備運作深度）。</li>
-            <li>流速大小：<span class="kbd">speed = √(u²+v²)</span>，再做區域平均得到時間序列。</li>
-            <li>發電量展示指標：<span class="kbd">P ∝ v³</span>（先做相對值，方便路人理解）。</li>
-          </ol>
-          <p class="mini">提示：把 MATLAB 產出的 CSV 放在同 repo（例如 <span class="kbd">kuroshio_speed_power_2024_50m.csv</span>），此頁會直接讀取並顯示。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast"></div>
-
-<script>
-  // ===== 你只需要改這裡（CSV 路徑） =====
-  // 建議把 CSV 放在 repo 根目錄，或 data/ 資料夾
-  const CSV_PATH = 'kuroshio_speed_power_2024_50m.csv';
-
-  const state = {
-    rows: [],
-    view: [],
-    rangeMode: 'all',
-    metric: 'mean_speed_mps',
-    playing: false,
-    timer: null,
-    cursor: 0,
-  };
-
-  function toast(msg){
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.style.display = 'block';
-    clearTimeout(el._t);
-    el._t = setTimeout(()=>{ el.style.display='none'; }, 2400);
-  }
-
-  function parseMatlabDatetime(s){
-    // Accept:
-    // 1) ISO: 2024-08-10T12:00:00.000Z
-    // 2) MATLAB-like: 10-Aug-2024 12:00:00
-    // 3) MATLAB table string sometimes: 10-Aug-2024 12:00:00 +08:00 (rare)
-    if(!s) return null;
-    const iso = Date.parse(s);
-    if(!Number.isNaN(iso)) return new Date(iso);
-
-    // Try "dd-MMM-yyyy HH:mm:ss"
-    const m = s.trim().match(/^(\d{1,2})-([A-Za-z]{3})-(\d{4})[ T](\d{2}):(\d{2}):(\d{2})/);
-    if(m){
-      const dd = parseInt(m[1],10);
-      const mon = m[2].toLowerCase();
-      const yyyy = parseInt(m[3],10);
-      const HH = parseInt(m[4],10);
-      const MM = parseInt(m[5],10);
-      const SS = parseInt(m[6],10);
-      const map = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
-      if(map[mon]===undefined) return null;
-      return new Date(Date.UTC(yyyy, map[mon], dd, HH, MM, SS));
-    }
-    return null;
-  }
-
-  async function loadCSV(path){
-    const res = await fetch(path, {cache:'no-store'});
-    if(!res.ok) throw new Error('讀不到 CSV：請確認路徑/檔名：' + path);
-    const text = await res.text();
-    const lines = text.trim().split(/\r?\n/);
-    const header = lines[0].split(',').map(x=>x.trim());
-
-    const idx = {
-      time: header.indexOf('time'),
-      mean_speed_mps: header.indexOf('mean_speed_mps'),
-      power_relative: header.indexOf('power_relative'),
-      power_norm: header.indexOf('power_norm'),
-    };
-    if(idx.time<0 || idx.mean_speed_mps<0) throw new Error('CSV 至少要有欄位：time, mean_speed_mps');
-
-    const out=[];
-    for(let i=1;i<lines.length;i++){
-      const cols = lines[i].split(',');
-      const t = parseMatlabDatetime(cols[idx.time]);
-      if(!t) continue;
-      out.push({
-        time: t,
-        mean_speed_mps: parseFloat(cols[idx.mean_speed_mps]),
-        power_relative: idx.power_relative>=0 ? parseFloat(cols[idx.power_relative]) : NaN,
-        power_norm: idx.power_norm>=0 ? parseFloat(cols[idx.power_norm]) : NaN,
-      });
-    }
-    out.sort((a,b)=>a.time-b.time);
-    return out;
-  }
-
-  function setLatestCards(){
-    if(!state.rows.length) return;
-    const last = state.rows[state.rows.length-1];
-    document.getElementById('latestTime').textContent = last.time.toLocaleString('zh-TW',{hour12:false});
-    document.getElementById('latestTimeSub').textContent = `共有 ${state.rows.length.toLocaleString()} 筆資料｜最後更新：${new Date().toLocaleTimeString('zh-TW',{hour12:false})}`;
-    document.getElementById('latestSpeed').textContent = Number.isFinite(last.mean_speed_mps) ? last.mean_speed_mps.toFixed(3) : '—';
-    document.getElementById('latestPower').textContent = Number.isFinite(last.power_norm) ? last.power_norm.toFixed(3) : '—';
-  }
-
-  function applyRange(){
-    if(!state.rows.length) return;
-    if(state.rangeMode==='all'){ state.view = state.rows.slice(); return; }
-    const days = state.rangeMode==='7' ? 7 : 30;
-    const end = state.rows[state.rows.length-1].time;
-    const start = new Date(end.getTime() - days*24*3600*1000);
-    state.view = state.rows.filter(r => r.time>=start && r.time<=end);
-  }
-
-  function metricLabel(){
-    const m = state.metric;
-    if(m==='mean_speed_mps') return '流速（m/s）';
-    if(m==='power_norm') return '相對發電量（0–1）';
-    return '相對發電量（v³）';
-  }
-
-  function drawChart(){
-    const x = state.view.map(r=>r.time);
-    const y = state.view.map(r=>r[state.metric]);
-
-    const layout = {
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      margin: {l:55,r:20,t:40,b:55},
-      xaxis: {title:'Time', gridcolor:'#1f2a44', color:'#e8eefc'},
-      yaxis: {title: metricLabel(), gridcolor:'#1f2a44', color:'#e8eefc'},
-      font: {color:'#e8eefc'},
-      hovermode: 'x unified',
-      title: {text:'Kuroshio Monitor', font:{size:16}},
-    };
-
-    const trace = [{
-      x, y,
-      type:'scatter', mode:'lines',
-      line:{width:2},
-      name: metricLabel(),
-    }];
-
-    // Cursor line
-    const cursorX = state.view[state.cursor]?.time ?? x[x.length-1];
-    layout.shapes = [{
-      type:'line', xref:'x', yref:'paper',
-      x0: cursorX, x1: cursorX, y0:0, y1:1,
-      line:{width:2, color:'rgba(122,162,255,.8)'}
-    }];
-
-    Plotly.newPlot('chart', trace, layout, {responsive:true, displayModeBar:true});
-  }
-
-  function syncSlider(){
-    const slider = document.getElementById('slider');
-    slider.max = Math.max(0, state.view.length-1);
-    slider.value = Math.min(state.cursor, state.view.length-1);
-
-    const cur = state.view[state.cursor];
-    document.getElementById('sliderLabel').textContent = cur
-      ? cur.time.toLocaleString('zh-TW',{hour12:false})
-      : '—';
-  }
-
-  function setRange(mode){
-    state.rangeMode = mode;
-    document.getElementById('btn7').classList.toggle('active', mode==='7');
-    document.getElementById('btn30').classList.toggle('active', mode==='30');
-    document.getElementById('btnAll').classList.toggle('active', mode==='all');
-    applyRange();
-    state.cursor = Math.max(0, state.view.length-1);
-    syncSlider();
-    drawChart();
-  }
-
-  function setMetric(m){
-    state.metric = m;
-    drawChart();
-  }
-
-  function exportView(){
-    const header = ['time','mean_speed_mps','power_relative','power_norm'];
-    const lines = [header.join(',')];
-    for(const r of state.view){
-      lines.push([
-        r.time.toISOString(),
-        Number.isFinite(r.mean_speed_mps)?r.mean_speed_mps:'',
-        Number.isFinite(r.power_relative)?r.power_relative:'',
-        Number.isFinite(r.power_norm)?r.power_norm:''
-      ].join(','));
-    }
-    const blob = new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `kuroshio_export_${state.rangeMode}_${state.metric}.csv`;
-    a.click();
-    setTimeout(()=>URL.revokeObjectURL(a.href), 500);
-  }
-
-  function tick(){
-    if(!state.playing) return;
-    state.cursor = (state.cursor + 1) % state.view.length;
-    syncSlider();
-    drawChart();
-  }
-
-  function play(){
-    if(state.playing || !state.view.length) return;
-    state.playing = true;
-    const ms = parseInt(document.getElementById('speedSel').value,10);
-    clearInterval(state.timer);
-    state.timer = setInterval(tick, ms);
-    toast('播放中');
-  }
-
-  function pause(){
-    state.playing = false;
-    clearInterval(state.timer);
-    toast('已暫停');
-  }
-
-  function switchTab(name){
-    // left panel always dashboard; right panel content swaps
-    const sideTitle = document.getElementById('sideTitle');
-    const sideHint = document.getElementById('sideHint');
-    const side = document.getElementById('sideContent');
-
-    const content = {
-      method: {
-        title:'方法',
-        hint:'放到書審/展覽解說最剛好',
-        html: document.getElementById('sideContent').innerHTML
-      },
-      download: {
-        title:'下載',
-        hint:'把結果帶走（給老師/展場）',
-        html: `
-          <h3 style="margin-top:0">下載</h3>
-          <p class="mini">你目前的 repo 建議放這些：</p>
-          <ul style="color:var(--muted); line-height:1.7; padding-left:18px;">
-            <li><span class="kbd">kuroshio_speed_power_2024_50m.csv</span>（主資料）</li>
-            <li><span class="kbd">kuroshio_speed_power_50m_2024.png</span>（展示圖）</li>
-            <li><span class="kbd">resume_kuroshio_2024.m</span>（重跑/更新用）</li>
-          </ul>
-          <p><button class="primary" id="btnExport2">⇩ 匯出目前區間 CSV</button></p>
-          <p class="mini">如果你要做「最新監測」，只要把 CSV 換成最新版本 commit 上來，網站就會更新。</p>
-        `
-      },
-      about: {
-        title:'關於',
-        hint:'一句話讓路人聽懂',
-        html: `
-          <h3 style="margin-top:0">關於這個展示</h3>
-          <p style="color:var(--muted); line-height:1.8;">
-            這個頁面把 <b>HYCOM 海洋數值模式</b> 的流速資料，轉成「黑潮發電潛力」的展示。
-            我們取 <b>50 公尺水深</b> 的流速（避免表層風影響），先算區域平均流速，再用 <span class="kbd">P ∝ v³</span> 做相對發電量指標。
-          </p>
-          <p class="mini">你可以按上面的播放鍵，讓時間游標像影片一樣跑，電視牆超好用。</p>
-        `
-      },
-      dash: {
-        title:'方法',
-        hint:'你可以把這段放到書審/展覽解說',
-        html: document.getElementById('sideContent').innerHTML
-      }
-    };
-
-    const c = content[name] || content.method;
-    sideTitle.textContent = c.title;
-    sideHint.textContent = c.hint;
-    side.innerHTML = c.html;
-
-    // rebind export button if in download tab
-    const btn = document.getElementById('btnExport2');
-    if(btn) btn.onclick = exportView;
-  }
-
-  async function refresh(){
-    pause();
-    document.getElementById('csvName').textContent = CSV_PATH;
-    try{
-      state.rows = await loadCSV(CSV_PATH);
-      if(!state.rows.length) throw new Error('CSV 讀到 0 筆資料，請檢查內容。');
-      setLatestCards();
-      applyRange();
-      state.cursor = Math.max(0, state.view.length-1);
-      syncSlider();
-      drawChart();
-      toast('已讀取 CSV');
-    }catch(e){
-      console.error(e);
-      toast(e.message);
-      alert(e.message);
-    }
-  }
-
-  function bindUI(){
-    // Range buttons
-    document.getElementById('btn7').onclick = ()=>setRange('7');
-    document.getElementById('btn30').onclick = ()=>setRange('30');
-    document.getElementById('btnAll').onclick = ()=>setRange('all');
-
-    // Metric
-    document.getElementById('metric').onchange = (e)=>setMetric(e.target.value);
-
-    // Play/Pause
-    document.getElementById('btnPlay').onclick = play;
-    document.getElementById('btnPause').onclick = pause;
-    document.getElementById('speedSel').onchange = ()=>{ if(state.playing){ pause(); play(); } };
-
-    // Slider
-    const slider = document.getElementById('slider');
-    slider.oninput = (e)=>{
-      pause();
-      state.cursor = parseInt(e.target.value,10) || 0;
-      syncSlider();
-      drawChart();
-    };
-
-    // Export
-    document.getElementById('btnExport').onclick = exportView;
-
-    // Refresh
-    document.getElementById('btnRefresh').onclick = refresh;
-
-    // Tabs
-    document.querySelectorAll('.chip').forEach(btn=>{
-      btn.onclick = ()=>{
-        document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
-        btn.classList.add('active');
-        switchTab(btn.dataset.tab);
-      };
-    });
-
-    // keyboard shortcuts
-    window.addEventListener('keydown', (e)=>{
-      if(e.code==='Space'){
-        e.preventDefault();
-        state.playing ? pause() : play();
-      }
-      if(e.key==='r' || e.key==='R') refresh();
-    });
-  }
-
-  // init
-  bindUI();
-  switchTab('method');
-  refresh();
-</script>
+  <footer>
+    <div>Copyright © 2026</div>
+  </footer>
 </body>
 </html>
