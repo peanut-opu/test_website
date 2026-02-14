@@ -1,300 +1,119 @@
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>黑潮展示｜Kuroshio Demo</title>
+  <meta charset="UTF-8" />
+  <title>黑潮流速與發電潛力展示</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
-    :root{
-      --bg:#0b1220; --card:#111a2e; --text:#eaf0ff; --muted:#a9b4d0;
-      --accent:#4da3ff; --accent2:#ff4d6d;
-      --shadow: 0 12px 30px rgba(0,0,0,.35);
-      --radius: 18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, "PingFang TC", "Noto Sans TC", Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 20% 0%, #142449 0%, var(--bg) 55%) fixed;
-      color:var(--text);
-    }
-    header{
-      padding:28px 18px 10px;
-      text-align:center;
-    }
-    header h1{margin:0 0 6px; font-size:28px; letter-spacing:.5px}
-    header p{margin:0; color:var(--muted); line-height:1.6}
-    .wrap{max-width:1100px; margin:18px auto 60px; padding:0 14px}
-    .grid{
-      display:grid; gap:16px;
-      grid-template-columns: 1.2fr .8fr;
-    }
-    @media (max-width: 900px){
-      .grid{grid-template-columns: 1fr}
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", Arial, sans-serif;
+      background: #f5f7fa;
+      color: #222;
     }
 
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      transform: translateY(0);
-      transition: transform .18s ease, border-color .18s ease;
-    }
-    .card:hover{ transform: translateY(-3px); border-color: rgba(77,163,255,.35); }
-
-    .card .hd{
-      padding:14px 16px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(6px);
-    }
-    .title{font-weight:700}
-    .meta{color:var(--muted); font-size:13px}
-
-    .body{padding:14px 16px}
-
-    .imgbox{
-      width:100%;
-      background:#0a1020;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
-      overflow:hidden;
-      position:relative;
-    }
-    img.plot{
-      width:100%;
-      display:block;
-      transform: scale(1);
-      transition: transform .25s ease;
-    }
-    .imgbox:hover img.plot{ transform: scale(1.01); }
-
-    .toolbar{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top:12px;
-      align-items:center;
-    }
-    button{
-      border:0;
-      padding:10px 12px;
-      border-radius:12px;
-      color:var(--text);
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      font-weight:600;
-    }
-    button:hover{ transform: translateY(-1px); border-color: rgba(77,163,255,.35); }
-    button.primary{ background: rgba(77,163,255,.18); border-color: rgba(77,163,255,.45); }
-    button.danger{ background: rgba(255,77,109,.16); border-color: rgba(255,77,109,.35); }
-
-    .pill{
-      display:inline-flex; gap:8px; align-items:center;
-      padding:8px 10px;
-      border-radius:999px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      color:var(--muted);
-      font-size:13px;
-    }
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    input[type="range"]{width:240px}
-    .note{color:var(--muted); font-size:13px; margin-top:8px; line-height:1.55}
-
-    .fadeIn{ animation: fadeIn .35s ease; }
-    @keyframes fadeIn{
-      from{opacity:.2; transform: translateY(4px)}
-      to{opacity:1; transform: translateY(0)}
+    header {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
     }
 
-    footer{
-      margin:26px auto 0;
-      padding:18px 16px;
-      max-width:1100px;
-      text-align:center;
-      color:var(--muted);
-      font-size:14px;
-      border-top:1px solid rgba(255,255,255,.10);
+    nav {
+      background: #0f2027;
+      text-align: center;
+      padding: 10px 0;
     }
-    footer a{ color:var(--text); text-decoration:none; border-bottom:1px dotted rgba(255,255,255,.35); }
-    footer a:hover{ border-bottom-color: rgba(77,163,255,.8); }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #0f2027;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      padding: 30px 10px;
+      font-size: 14px;
+    }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>黑潮展示｜Kuroshio Demo</h1>
+
+<header>
+  <h1>黑潮流速與發電潛力展示</h1>
+  <p>以 2024 年資料為例的時間序列分析</p>
+</header>
+
+<nav>
+  <a href="#intro">介紹</a>
+  <a href="#timeseries">時間序列</a>
+  <a href="#contact">聯絡方式</a>
+</nav>
+
+<main>
+
+  <section id="intro">
+    <h2>計畫簡介</h2>
     <p>
-      展示重點：左邊「空間分佈圖（含台灣位置）」、右邊「時間序列圖」。<br>
-      現場網路差也沒關係：把圖片先放在 GitHub Pages 上就能展示。
+      本網站展示黑潮在台灣東方海域的流速特性，並探討其作為海洋能發電的潛力。
+      內容包含歷史時間序列分析，未來可擴充即時預報與互動功能。
     </p>
-  </header>
+  </section>
 
-  <div class="wrap">
-    <div class="grid">
+  <section id="timeseries">
+    <h2>2024 年黑潮流速時間序列（50 m）</h2>
+    <p>
+      下圖為 2024 年黑潮流速的時間序列結果（區域平均、深度 50 m）。
+    </p>
 
-      <!-- 左：空間圖（地圖/流速） -->
-      <section class="card">
-        <div class="hd">
-          <div>
-            <div class="title">空間分佈圖（流速/海溫）</div>
-            <div class="meta" id="mapMeta">Frame: 0</div>
-          </div>
-          <span class="pill" id="mapStatus">🟢 Ready</span>
-        </div>
+    <img src="kuroshio_timeseries_2024.png" alt="2024 黑潮流速時間序列">
+  </section>
 
-        <div class="body">
-          <div class="imgbox">
-            <img id="mapImg" class="plot fadeIn" src="kuroshio_map_000.png" alt="Kuroshio map">
-          </div>
+  <section id="contact">
+    <h2>聯絡方式</h2>
+    <p>Email 1：<a href="mailto:baby56789767644@gmail.com">baby56789767644@gmail.com</a></p>
+    <p>Email 2：<a href="mailto:01481002@mail.ntou.edu.tw">01481002@mail.ntou.edu.tw</a></p>
+  </section>
 
-          <div class="toolbar">
-            <button class="primary" id="btnPlay">開始</button>
-            <button id="btnPause">暫停</button>
-            <button id="btnNext">下一張</button>
-            <button class="danger" id="btnLatest">回到最新</button>
-            <button id="btnHardRefresh">強制更新</button>
+</main>
 
-            <span class="pill">速度：<span id="speedLabel">1.0x</span></span>
-            <input id="speed" type="range" min="0.25" max="3" step="0.25" value="1">
-          </div>
+<footer>
+  © 2026 黑潮展示專題｜GitHub Pages
+</footer>
 
-          <div class="note">
-            你之後做動畫時，把圖片命名成：<b>kuroshio_map_000.png ~ kuroshio_map_0NN.png</b> 就會真的動。<br>
-            現在如果只有 1 張也能先展示（按下一張會停在最後）。
-          </div>
-        </div>
-      </section>
-
-      <!-- 右：時間序列圖 -->
-      <aside class="card">
-        <div class="hd">
-          <div>
-            <div class="title">時間序列圖（流速/發電量）</div>
-            <div class="meta" id="tsMeta">固定圖：kuroshio_timeseries_2024.png</div>
-          </div>
-          <span class="pill">📈 Time series</span>
-        </div>
-
-        <div class="body">
-          <div class="imgbox">
-            <img id="tsImg" class="plot fadeIn" src="kuroshio_timeseries_2024.png" alt="Kuroshio timeseries">
-          </div>
-
-          <div class="row" style="margin-top:12px">
-            <button id="btnTSRefresh">更新時間序列圖</button>
-          </div>
-
-          <div class="note">
-            如果你重新輸出同檔名（例如再存一次 <b>kuroshio_timeseries_2024.png</b>），按「更新」可以強制清快取。
-          </div>
-        </div>
-      </aside>
-
-    </div>
-  </div>
-
-  <footer>
-    Contact<br>
-    <a href="mailto:baby56789767644@gmail.com">baby56789767644@gmail.com</a><br>
-    <a href="mailto:01481002@mail.ntou.edu.tw">01481002@mail.ntou.edu.tw</a>
-  </footer>
-
-  <script>
-    // ============ 設定區：你以後只要改這些 ============
-    const MAP_PREFIX = "kuroshio_map_";
-    const EXT = ".png";
-
-    // 你最多可能會有幾張？先填 120 張。沒有那麼多也沒關係，會自動停在最後一張。
-    let MAX_FRAMES = 120;
-
-    // ============ 狀態 ============
-    let frame = 0;
-    let timer = null;
-    let speed = 1.0;
-
-    const mapImg = document.getElementById("mapImg");
-    const tsImg  = document.getElementById("tsImg");
-    const mapMeta = document.getElementById("mapMeta");
-    const mapStatus = document.getElementById("mapStatus");
-    const speedSlider = document.getElementById("speed");
-    const speedLabel  = document.getElementById("speedLabel");
-
-    function pad3(n){ return String(n).padStart(3,"0"); }
-
-    // 強制不吃快取（每次加一個時間戳 query）
-    function bustCache(url){
-      const sep = url.includes("?") ? "&" : "?";
-      return url + sep + "v=" + Date.now();
-    }
-
-    function setMapFrame(n){
-      frame = Math.max(0, n);
-      const src = `${MAP_PREFIX}${pad3(frame)}${EXT}`;
-      mapImg.classList.remove("fadeIn");
-      void mapImg.offsetWidth;
-      mapImg.classList.add("fadeIn");
-      mapImg.src = bustCache(src);
-      mapMeta.textContent = `Frame: ${frame}`;
-    }
-
-    function play(){
-      if(timer) return;
-      mapStatus.textContent = "🟢 Playing";
-      const interval = Math.max(120, 650 / speed);
-      timer = setInterval(()=> setMapFrame(frame + 1), interval);
-    }
-
-    function stop(){
-      if(timer){
-        clearInterval(timer);
-        timer = null;
-      }
-      mapStatus.textContent = "🟢 Ready";
-    }
-
-    // 如果圖片不存在（404），代表超出現有張數：回退一張並停止
-    mapImg.addEventListener("error", ()=>{
-      stop();
-      if(frame > 0){
-        frame -= 1;
-        mapStatus.textContent = "🟡 Reached last frame";
-        setMapFrame(frame);
-      }else{
-        mapStatus.textContent = "🔴 Missing image (kuroshio_map_000.png?)";
-      }
-    });
-
-    // ============ 按鈕 ============
-    document.getElementById("btnPlay").addEventListener("click", play);
-    document.getElementById("btnPause").addEventListener("click", stop);
-    document.getElementById("btnNext").addEventListener("click", ()=> setMapFrame(frame + 1));
-    document.getElementById("btnLatest").addEventListener("click", ()=>{
-      stop();
-      // 直接跳到很後面，觸發 error 回退到最後一張
-      setMapFrame(MAX_FRAMES);
-    });
-    document.getElementById("btnHardRefresh").addEventListener("click", ()=>{
-      // 強制刷新目前這張
-      setMapFrame(frame);
-    });
-
-    document.getElementById("btnTSRefresh").addEventListener("click", ()=>{
-      tsImg.src = bustCache("kuroshio_timeseries_2024.png");
-    });
-
-    // 速度滑桿
-    speedSlider.addEventListener("input", ()=>{
-      speed = parseFloat(speedSlider.value);
-      speedLabel.textContent = `${speed.toFixed(2)}x`;
-      if(timer){ stop(); play(); }
-    });
-
-    // 初始載入
-    setMapFrame(0);
-  </script>
 </body>
 </html>
