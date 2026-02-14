@@ -2,190 +2,282 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>我的 GitHub Pages 網站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>黑潮展示｜Kuroshio Demo</title>
   <style>
     :root{
-      --bg:#f6f7f9;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --brand:#111827;
-      --line:#e5e7eb;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --radius: 14px;
+      --bg:#0b1220; --card:#111a2e; --text:#eaf0ff; --muted:#a9b4d0;
+      --accent:#4da3ff; --accent2:#ff4d6d;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius: 18px;
     }
     *{box-sizing:border-box}
     body{
-      margin:0;
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,"Noto Sans TC","PingFang TC","Heiti TC",sans-serif;
-      background:var(--bg);
+      margin:0; font-family: system-ui, -apple-system, "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, #142449 0%, var(--bg) 55%) fixed;
       color:var(--text);
-      line-height:1.6;
     }
     header{
-      background:linear-gradient(180deg,#111827,#1f2937);
-      color:#fff;
-      padding:44px 18px 26px;
+      padding:28px 18px 10px;
       text-align:center;
     }
-    header h1{
-      margin:0;
-      font-size:28px;
-      letter-spacing:.5px;
-    }
-    header p{
-      margin:10px 0 0;
-      color:rgba(255,255,255,.85);
-      font-size:14px;
-    }
-    nav{
-      position:sticky;
-      top:0;
-      z-index:10;
-      background:#111827;
-      border-top:1px solid rgba(255,255,255,.08);
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    nav .wrap{
-      max-width:980px;
-      margin:0 auto;
-      padding:10px 14px;
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
-    nav a{
-      color:rgba(255,255,255,.9);
-      text-decoration:none;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:14px;
-    }
-    nav a:hover{background:rgba(255,255,255,.10)}
-    main{
-      max-width:980px;
-      margin:22px auto 60px;
-      padding:0 14px;
-      display:grid;
-      gap:14px;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:18px 18px;
-    }
-    .card h2{
-      margin:0 0 8px;
-      font-size:18px;
-      color:var(--brand);
-    }
-    .muted{color:var(--muted)}
+    header h1{margin:0 0 6px; font-size:28px; letter-spacing:.5px}
+    header p{margin:0; color:var(--muted)}
+    .wrap{max-width:1100px; margin:18px auto 60px; padding:0 14px}
     .grid{
-      display:grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap:12px;
+      display:grid; gap:16px;
+      grid-template-columns: 1.2fr .8fr;
     }
-    @media (max-width:720px){
-      header h1{font-size:22px}
-      .grid{grid-template-columns:1fr}
+    @media (max-width: 900px){
+      .grid{grid-template-columns: 1fr}
     }
-    ul{margin:10px 0 0; padding-left:18px}
-    a{color:#2563eb}
-    .btnrow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:10px;
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transform: translateY(0);
+      transition: transform .18s ease, border-color .18s ease;
     }
-    .btn{
-      display:inline-block;
+    .card:hover{ transform: translateY(-3px); border-color: rgba(77,163,255,.35); }
+
+    .card .hd{
+      padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(6px);
+    }
+    .title{font-weight:700}
+    .meta{color:var(--muted); font-size:13px}
+    .body{padding:14px 16px}
+
+    .imgbox{
+      width:100%;
+      background:#0a1020;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      overflow:hidden;
+      position:relative;
+    }
+    img.plot{
+      width:100%;
+      display:block;
+      transform: scale(1);
+      transition: transform .25s ease;
+    }
+    .imgbox:hover img.plot{ transform: scale(1.01); }
+
+    .toolbar{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:12px;
+      align-items:center;
+    }
+    button{
+      border:0;
       padding:10px 12px;
-      border:1px solid var(--line);
       border-radius:12px;
-      background:#fff;
-      text-decoration:none;
       color:var(--text);
-      font-size:14px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      font-weight:600;
     }
-    .btn:hover{background:#f3f4f6}
-    footer{
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-      padding:22px 14px;
-    }
+    button:hover{ transform: translateY(-1px); border-color: rgba(77,163,255,.35); }
+    button.primary{ background: rgba(77,163,255,.18); border-color: rgba(77,163,255,.45); }
+    button.danger{ background: rgba(255,77,109,.16); border-color: rgba(255,77,109,.35); }
+
     .pill{
-      display:inline-block;
-      padding:4px 10px;
-      border:1px solid var(--line);
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
       border-radius:999px;
-      font-size:12px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
       color:var(--muted);
-      background:#fff;
-      margin-top:6px;
+      font-size:13px;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    input[type="range"]{width:240px}
+    .note{color:var(--muted); font-size:13px; margin-top:8px; line-height:1.55}
+
+    .fadeIn{
+      animation: fadeIn .35s ease;
+    }
+    @keyframes fadeIn{
+      from{opacity:.2; transform: translateY(4px)}
+      to{opacity:1; transform: translateY(0)}
     }
   </style>
 </head>
-
 <body>
   <header>
-    <h1>歡迎來到我的 GitHub Pages 網站</h1>
-    <p>這個頁面用來介紹我、展示專案，以及提供聯絡方式。</p>
+    <h1>黑潮展示｜Kuroshio Demo</h1>
+    <p>（先做互動與版面）之後把圖片換成你 MATLAB 產出的圖，就能直接展示</p>
   </header>
 
-  <nav>
-    <div class="wrap">
-      <a href="#home">首頁</a>
-      <a href="#about">關於我</a>
-      <a href="#projects">我的專案</a>
-      <a href="#contact">聯絡方式</a>
-    </div>
-  </nav>
+  <div class="wrap">
+    <div class="grid">
 
-  <main>
-    <section id="home" class="card">
-      <h2>網站內容區</h2>
-      <p class="muted">
-        你可以在這裡放專案簡介、成果截圖、或是展覽用的簡短說明。
-      </p>
-      <div class="pill">提示：GitHub Pages 會讀取根目錄的 index.html</div>
-    </section>
+      <!-- 左：空間圖（地圖/流速） -->
+      <section class="card">
+        <div class="hd">
+          <div>
+            <div class="title">空間分佈圖（流速/海溫）</div>
+            <div class="meta" id="mapMeta">Frame: 0</div>
+          </div>
+          <span class="pill" id="mapStatus">🟢 Ready</span>
+        </div>
+        <div class="body">
+          <div class="imgbox">
+            <img id="mapImg" class="plot fadeIn" src="kuroshio_map_000.png" alt="Kuroshio map">
+          </div>
 
-    <section class="grid">
-      <section id="about" class="card">
-        <h2>關於我</h2>
-        <p>我是一名大一學生，正在做黑潮資料與發電量監測相關專案。</p>
-        <p class="muted">之後可以把這段改成：你的系所、興趣、在做的研究題目。</p>
-      </section>
+          <div class="toolbar">
+            <button class="primary" id="btnPlay">開始</button>
+            <button id="btnPause">暫停</button>
+            <button id="btnNext">下一張</button>
+            <button class="danger" id="btnLatest">回到最新</button>
 
-      <section id="projects" class="card">
-        <h2>我的專案</h2>
-        <p class="muted">先放兩個連結，之後你把網址換成真正的頁面或作品。</p>
-        <ul>
-          <li><a href="#">專案 A</a></li>
-          <li><a href="#">專案 B</a></li>
-        </ul>
-        <div class="btnrow">
-          <a class="btn" href="#contact">聯絡我</a>
-          <a class="btn" href="#home">回到上方</a>
+            <span class="pill">速度：<span id="speedLabel">1.0x</span></span>
+            <input id="speed" type="range" min="0.25" max="3" step="0.25" value="1">
+          </div>
+
+          <div class="note">
+            先用 placeholder 圖也可以。你之後只要把檔名放成：<br>
+            <b>kuroshio_map_000.png ~ kuroshio_map_0NN.png</b> 就會真的「動」。
+          </div>
         </div>
       </section>
-    </section>
 
-    <section id="contact" class="card">
-      <h2>聯絡方式</h2>
-      <p>
-        您可以透過電子郵件與我聯繫：
-        <a href="mailto:baby56789767644@gmail.com">baby56789767644@gmail.com</a>
-      </p>
-      <p class="muted">（之後如果要更正式，可以加上 GitHub、學校信箱、或社群連結。）</p>
-    </section>
-  </main>
+      <!-- 右：時間序列圖 -->
+      <aside class="card">
+        <div class="hd">
+          <div>
+            <div class="title">時間序列圖（流速/發電量）</div>
+            <div class="meta" id="tsMeta">Frame: 0</div>
+          </div>
+          <span class="pill">📈 Time series</span>
+        </div>
+        <div class="body">
+          <div class="imgbox">
+            <img id="tsImg" class="plot fadeIn" src="kuroshio_ts_000.png" alt="Kuroshio timeseries">
+          </div>
 
-  <footer>
-    <div>Copyright © 2026</div>
-  </footer>
+          <div class="row" style="margin-top:12px">
+            <button id="btnTSNext">時間序列：下一張</button>
+            <button id="btnTSLatest" class="danger">時間序列：回到最新</button>
+          </div>
+
+          <div class="note">
+            你之後如果做「未來 7 天預報」，可以把每次下載的圖固定命名成
+            <b>kuroshio_ts_latest.png</b>，展前更新一次就好。
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <script>
+    // ====== 你只需要改這裡 ======
+    const MAP_PREFIX = "kuroshio_map_";
+    const TS_PREFIX  = "kuroshio_ts_";
+    const EXT = ".png";
+
+    // 先假設最多 60 張（之後你有幾張再改）
+    let MAX_FRAMES = 60;
+
+    // ====== 狀態 ======
+    let frame = 0;
+    let tsFrame = 0;
+    let timer = null;
+    let speed = 1.0;
+
+    const mapImg = document.getElementById("mapImg");
+    const tsImg  = document.getElementById("tsImg");
+    const mapMeta = document.getElementById("mapMeta");
+    const tsMeta  = document.getElementById("tsMeta");
+    const mapStatus = document.getElementById("mapStatus");
+
+    function pad3(n){ return String(n).padStart(3,"0"); }
+
+    // 載入圖片（若檔案不存在，就停在最後一張）
+    function setMapFrame(n){
+      frame = Math.max(0, n);
+      const src = `${MAP_PREFIX}${pad3(frame)}${EXT}`;
+      mapImg.classList.remove("fadeIn");
+      void mapImg.offsetWidth; // reflow
+      mapImg.classList.add("fadeIn");
+      mapImg.src = src;
+      mapMeta.textContent = `Frame: ${frame}`;
+    }
+
+    function setTSFrame(n){
+      tsFrame = Math.max(0, n);
+      const src = `${TS_PREFIX}${pad3(tsFrame)}${EXT}`;
+      tsImg.classList.remove("fadeIn");
+      void tsImg.offsetWidth;
+      tsImg.classList.add("fadeIn");
+      tsImg.src = src;
+      tsMeta.textContent = `Frame: ${tsFrame}`;
+    }
+
+    // 若圖片 404，代表超出現有張數：回退一張並停止播放
+    mapImg.addEventListener("error", ()=>{
+      if(frame > 0){
+        frame -= 1;
+        mapStatus.textContent = "🟡 Reached last frame";
+        stop();
+        setMapFrame(frame);
+      }else{
+        mapStatus.textContent = "🔴 Missing image";
+        stop();
+      }
+    });
+
+    function play(){
+      if(timer) return;
+      mapStatus.textContent = "🟢 Playing";
+      const interval = Math.max(120, 650 / speed); // speed越快，間隔越短
+      timer = setInterval(()=>{
+        setMapFrame(frame + 1);
+      }, interval);
+    }
+
+    function stop(){
+      if(timer){
+        clearInterval(timer);
+        timer = null;
+      }
+      mapStatus.textContent = "🟢 Ready";
+    }
+
+    // ====== 按鈕 ======
+    document.getElementById("btnPlay").addEventListener("click", play);
+    document.getElementById("btnPause").addEventListener("click", stop);
+    document.getElementById("btnNext").addEventListener("click", ()=> setMapFrame(frame + 1));
+    document.getElementById("btnLatest").addEventListener("click", ()=>{
+      stop();
+      // 直接跳到很後面，會觸發 error 回退到最後一張
+      setMapFrame(MAX_FRAMES);
+    });
+
+    document.getElementById("btnTSNext").addEventListener("click", ()=> setTSFrame(tsFrame + 1));
+    document.getElementById("btnTSLatest").addEventListener("click", ()=> setTSFrame(0));
+
+    const speedSlider = document.getElementById("speed");
+    const speedLabel  = document.getElementById("speedLabel");
+    speedSlider.addEventListener("input", ()=>{
+      speed = parseFloat(speedSlider.value);
+      speedLabel.textContent = `${speed.toFixed(2)}x`;
+      if(timer){ stop(); play(); }
+    });
+
+    // 初始載入
+    setMapFrame(0);
+    setTSFrame(0);
+  </script>
 </body>
 </html>
