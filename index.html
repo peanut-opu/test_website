@@ -1,72 +1,68 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <title>黑潮流速與發電潛力展示</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta charset="UTF-8">
+  <title>黑潮介紹｜Kuroshio Current</title>
   <style>
     body {
       margin: 0;
-      font-family: "Noto Sans TC", Arial, sans-serif;
-      background: #f5f7fa;
-      color: #222;
+      font-family: Arial, "Noto Sans TC", sans-serif;
+      background: #0b1c2d;
+      color: #ffffff;
     }
 
     header {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
+      background: linear-gradient(180deg, #0b1c2d, #122f4a);
       padding: 40px 20px;
       text-align: center;
     }
 
-    nav {
-      background: #0f2027;
-      text-align: center;
-      padding: 10px 0;
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+      letter-spacing: 1px;
     }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: 500;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
+    header p {
+      margin-top: 10px;
+      color: #cfe3ff;
     }
 
     main {
-      max-width: 1100px;
+      max-width: 1000px;
       margin: 40px auto;
       padding: 0 20px;
     }
 
     section {
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      margin-bottom: 60px;
     }
 
-    h2 {
-      margin-top: 0;
-      color: #0f2027;
+    section h2 {
+      border-left: 6px solid #ffcc00;
+      padding-left: 12px;
+      margin-bottom: 20px;
+      font-size: 24px;
     }
 
     img {
       max-width: 100%;
       border-radius: 10px;
-      margin-top: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      background: #ffffff;
     }
 
     footer {
+      background: #081421;
+      padding: 30px 20px;
       text-align: center;
-      color: #777;
-      padding: 30px 10px;
       font-size: 14px;
+      color: #a9c2dd;
+    }
+
+    a {
+      color: #66b3ff;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -74,45 +70,43 @@
 <body>
 
 <header>
-  <h1>黑潮流速與發電潛力展示</h1>
-  <p>以 2024 年資料為例的時間序列分析</p>
+  <h1>黑潮（Kuroshio Current）</h1>
+  <p>黑潮流速時間序列與海洋能展示</p>
 </header>
-
-<nav>
-  <a href="#intro">介紹</a>
-  <a href="#timeseries">時間序列</a>
-  <a href="#contact">聯絡方式</a>
-</nav>
 
 <main>
 
-  <section id="intro">
-    <h2>計畫簡介</h2>
+  <section>
+    <h2>黑潮是什麼？</h2>
     <p>
-      本網站展示黑潮在台灣東方海域的流速特性，並探討其作為海洋能發電的潛力。
-      內容包含歷史時間序列分析，未來可擴充即時預報與互動功能。
+      黑潮是西北太平洋最重要的暖流之一，沿著台灣東岸向北流動，
+      對台灣的氣候、漁業與海洋能具有重大影響。
     </p>
   </section>
 
-  <section id="timeseries">
-    <h2>2024 年黑潮流速時間序列（50 m）</h2>
+  <section>
+    <h2>2024 年黑潮流速時間序列</h2>
     <p>
-      下圖為 2024 年黑潮流速的時間序列結果（區域平均、深度 50 m）。
+      下圖為 2024 年黑潮流速（50 m 深度）的時間序列，
+      資料來自數值模式與歷史分析結果。
     </p>
 
-    <img src="kuroshio_timeseries_2024.png" alt="2024 黑潮流速時間序列">
+    <img src="kuroshio_timeseries_2024.png" alt="Kuroshio time series 2024">
   </section>
 
-  <section id="contact">
+  <section>
     <h2>聯絡方式</h2>
-    <p>Email 1：<a href="mailto:baby56789767644@gmail.com">baby56789767644@gmail.com</a></p>
-    <p>Email 2：<a href="mailto:01481002@mail.ntou.edu.tw">01481002@mail.ntou.edu.tw</a></p>
+    <p>Email：</p>
+    <ul>
+      <li><a href="mailto:baby56789767644@gmail.com">baby56789767644@gmail.com</a></li>
+      <li><a href="mailto:01481002@mail.ntou.edu.tw">01481002@mail.ntou.edu.tw</a></li>
+    </ul>
   </section>
 
 </main>
 
 <footer>
-  © 2026 黑潮展示專題｜GitHub Pages
+  © 2024 黑潮展示網站｜Kuroshio Current Visualization
 </footer>
 
 </body>
